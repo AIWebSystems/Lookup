@@ -5,6 +5,13 @@ use Pyro\Module\Streams\Ui\EntryUi;
 class LookupUi extends EntryUi
 {
     /**
+     * Template
+     *
+     * @var null
+     */
+    public $template = null;
+
+    /**
      * Create a new ContactEntryLookupUi instance
      */
     public function __construct($attributes = array())
@@ -26,8 +33,10 @@ class LookupUi extends EntryUi
         // Scope
         $scope = $this->getScope();
 
-        // Template
-        $this->template = $this->getTemplate();
+        // Default template
+        if (!$this->template) {
+            $this->template = '{{ ' . $this->getTitleColumn() . ' }}';
+        }
 
         // On query
         $this->onQuery(
@@ -41,11 +50,11 @@ class LookupUi extends EntryUi
         // Buttons
         $this->buttons = array(
             array(
-                'label' => '<i class="fa fa-check"></i>',
-                'data-toggle' => 'select',
-                'data-id' => '{{ id }}',
-                'data-template' => $this->getTemplate(),
-                'class' => 'btn-sm btn-success',
+                'label'         => '<i class="fa fa-check"></i>',
+                'data-toggle'   => 'select',
+                'data-id'       => '{{ id }}',
+                'data-template' => $this->template,
+                'class'         => 'btn-sm btn-success',
             ),
         );
     }

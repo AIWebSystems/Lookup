@@ -98,7 +98,7 @@ class Lookup extends FieldTypeAbstract
 
         $entry = $relation->find($this->value);
 
-        $template = $this->getParameter('template', $ui->getTemplate() ? : '{{ ' . $stream->title_column . ' }}');
+        $template = $this->getParameter('template', $ui->template ? : '{{ ' . $stream->title_column . ' }}');
         $template = ci()->parser->parse_string($template, $entry, true, false, false);
 
         $uri = 'streams_core/ajax/field/lookup/lookup/' . $this->getFormSlugPrefix() . $this->field->field_slug;
@@ -180,13 +180,12 @@ class Lookup extends FieldTypeAbstract
 
         $stream = $relation->getStream();
 
-        $template = $field->getParameter('template', '{{ ' . $stream->title_column . ' }}');
-
-        $ui = $field->getParameter('ui_class', 'Pyro\FieldType\EntryUi');
+        $ui = $field->getParameter('ui_class', 'Pyro\FieldType\LookupUi');
         $ui = new $ui(
             array(
-                'template' => $template,
-                'scope'    => $field->getParameter('scope')
+                'titleColumn' => $stream->title_column,
+                'template'    => $this->getParameter('template'),
+                'scope'       => $field->getParameter('scope')
             )
         );
 
