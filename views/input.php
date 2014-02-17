@@ -6,7 +6,7 @@
     <?php echo form_hidden($field->formSlug, $field->value); ?>
     <?php echo form_input($field->formSlug.'_template', $template, 'class="form-control" disabled'); ?>
 
-    <a class="btn btn-success input-group-addon" data-toggle="lookup">
+    <a data-href="<?php echo $url; ?>" class="btn btn-success input-group-addon" data-toggle="lookup">
         <i class="fa fa-search"></i>
     </a>
 </div>
