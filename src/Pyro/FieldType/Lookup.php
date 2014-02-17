@@ -96,10 +96,14 @@ class Lookup extends FieldTypeAbstract
 
         $stream = $relation->getStream();
 
-        $entry = $relation->find($this->value);
+        if ($this->value) {
+            $entry    = $relation->find($this->value);
 
-        $template = $this->getParameter('template', $ui->template ? : '{{ ' . $stream->title_column . ' }}');
-        $template = ci()->parser->parse_string($template, $entry, true, false, false);
+            $template = $this->getParameter('template', $ui->template ? : '{{ ' . $stream->title_column . ' }}');
+            $template = ci()->parser->parse_string($template, $entry, true, false, false);
+        } else {
+            $entry = $template = null;
+        }
 
         $uri = 'streams_core/ajax/field/lookup/lookup/' . $this->getFormSlugPrefix() . $this->field->field_slug;
         $url = site_url($uri);
