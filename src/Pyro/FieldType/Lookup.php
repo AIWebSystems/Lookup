@@ -40,6 +40,7 @@ class Lookup extends FieldTypeAbstract
      * @var array
      */
     public $custom_parameters = array(
+        'title',
         'template',
         'relation_class',
         'ui',
@@ -97,7 +98,7 @@ class Lookup extends FieldTypeAbstract
         $stream = $relation->getStream();
 
         if ($this->value) {
-            $entry    = $relation->find($this->value);
+            $entry = $relation->find($this->value);
 
             $template = $this->getParameter('template', $ui->template ? : '{{ ' . $stream->title_column . ' }}');
             $template = ci()->parser->parse_string($template, $entry, true, false, false);
@@ -105,7 +106,7 @@ class Lookup extends FieldTypeAbstract
             $entry = $template = null;
         }
 
-        $uri = 'streams_core/ajax/field/lookup/lookup/' . $this->getFormSlugPrefix() . $this->field->field_slug;
+        $uri = 'streams_core/ajax/field/lookup/table/' . $this->getFormSlugPrefix() . $this->field->field_slug;
         $url = site_url($uri);
 
         $data = array(
@@ -164,11 +165,11 @@ class Lookup extends FieldTypeAbstract
     }
 
     /**
-     * Ajax lookup
+     * Ajax table
      *
      * @return string
      */
-    public function ajaxLookup()
+    public function ajaxTable()
     {
         list($namespace, $stream, $slug) = explode('-', ci()->uri->segment(6));
 
@@ -184,14 +185,10 @@ class Lookup extends FieldTypeAbstract
 
         $stream = $relation->getStream();
 
+        $attributes = $this->getAttributes($field);
+
         $ui = $field->getParameter('ui_class', 'Pyro\FieldType\LookupUi');
-        $ui = new $ui(
-            array(
-                'titleColumn' => $stream->title_column,
-                'template'    => $this->getParameter('template'),
-                'scope'       => $field->getParameter('scope')
-            )
-        );
+        $ui = new $ui($attributes);
 
         $table = $ui->table($relation)->render(true);
 
@@ -214,5 +211,34 @@ class Lookup extends FieldTypeAbstract
     public function getColumnName()
     {
         return parent::getColumnName() . '_id';
+    }
+
+    /**
+     * Get attributes
+     *
+     * @param $field
+     */
+    private function getAttributes($stream)
+    {
+        $attributes = array(
+            'titleColumn' => $stream->title_column,
+        );
+
+        // Title
+        if ($title = $this->getParameter('title')) {
+            $attributes['title'] = $title;
+        }
+
+        // Template
+        if ($template = $this->getParameter('template')) {
+            $attributes['template'] = $template;
+        }
+
+        // Scope
+        if ($scope = $this->getParameter('scope')) {
+            $attributes['scope'] = $scope;
+        }
+
+        return $attributes;
     }
 }

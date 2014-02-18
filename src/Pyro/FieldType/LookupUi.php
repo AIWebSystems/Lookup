@@ -5,13 +5,6 @@ use Pyro\Module\Streams\Ui\EntryUi;
 class LookupUi extends EntryUi
 {
     /**
-     * Template
-     *
-     * @var null
-     */
-    public $template = null;
-
-    /**
      * Create a new ContactEntryLookupUi instance
      */
     public function __construct($attributes = array())
@@ -30,19 +23,21 @@ class LookupUi extends EntryUi
     {
         parent::boot();
 
-        // Scope
-        $scope = $this->getScope();
-
-        // Default template
-        if (!$this->template) {
-            $this->template = '{{ ' . $this->getTitleColumn() . ' }}';
+        // Title
+        if (!$this->getTitle()) {
+            $this->title(lang('streams:lookup.name'));
+        } else {
+            $this->title($this->getTitle());
         }
+
+        // Clone
+        $ui = $this;
 
         // On query
         $this->onQuery(
-            function ($query) use ($scope) {
-                if ($scope) {
-                    return $query->{$scope}();
+            function ($query) use ($ui) {
+                if ($ui->getScope()) {
+                    return $query->{$ui->getScope()}();
                 }
             }
         );
