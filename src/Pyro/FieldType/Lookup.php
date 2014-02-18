@@ -180,12 +180,14 @@ class Lookup extends FieldTypeAbstract
 
         $field->setStream($fieldStream);
 
+        $formSlug = $field->formSlug;
+
         $relation = $field->getParameter('relation_class');
         $relation = new $relation;
 
         $stream = $relation->getStream();
 
-        $attributes = $this->getAttributes($field);
+        $attributes = $this->getAttributes($stream);
 
         $ui = $field->getParameter('ui_class', 'Pyro\FieldType\LookupUi');
         $ui = new $ui($attributes);
@@ -193,8 +195,8 @@ class Lookup extends FieldTypeAbstract
         $table = $ui->table($relation)->render(true);
 
         $data = array(
-            'field'   => $field,
-            'content' => $table,
+            'formSlug' => $formSlug,
+            'content'  => $table,
         );
 
         return ci()->template

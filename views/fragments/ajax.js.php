@@ -6,7 +6,7 @@
             e.preventDefault();
 
             var selection = $(this);
-            var formSlug = '<?php echo $field->formSlug; ?>';
+            var formSlug = '<?php echo $formSlug; ?>';
 
             $(opener.document).find('input[name="' + formSlug + '"]').val(selection.data('id'));
             $(opener.document).find('input[name="' + formSlug + '_template"]').val(selection.data('template'));
