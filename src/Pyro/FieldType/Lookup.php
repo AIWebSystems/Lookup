@@ -67,6 +67,14 @@ class Lookup extends FieldTypeAbstract
     }
 
     /**
+     * Event
+     */
+    public function event()
+    {
+        $this->appendMetadata($this->view('fragments/event.js.php', $data));
+    }
+
+    /**
      * Field event
      */
     public function fieldEvent()
@@ -79,7 +87,7 @@ class Lookup extends FieldTypeAbstract
             'options' => $options,
         );
 
-        $this->appendMetadata($this->view('fragments/lookup.js.php', $data));
+        $this->appendMetadata($this->view('fragments/field.js.php', $data));
     }
 
     /**
