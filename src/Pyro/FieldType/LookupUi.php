@@ -45,6 +45,7 @@ class LookupUi extends EntryUi
         // Buttons
         $this->buttons = array(
             array(
+                'url'           => '#',
                 'label'         => '<i class="fa fa-check"></i>',
                 'data-toggle'   => 'select',
                 'data-id'       => '{{ id }}',
