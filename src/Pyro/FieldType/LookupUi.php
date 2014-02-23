@@ -5,13 +5,11 @@ use Pyro\Module\Streams\Ui\EntryUi;
 class LookupUi extends EntryUi
 {
     /**
-     * Create a new ContactEntryLookupUi instance
+     * Create a new LookupUi instance
      */
     public function __construct($attributes = array())
     {
         parent::__construct($attributes);
-
-        ci()->lang->load('people/people');
     }
 
     /**
