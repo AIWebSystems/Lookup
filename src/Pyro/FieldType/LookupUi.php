@@ -21,13 +21,6 @@ class LookupUi extends EntryUi
     {
         parent::boot();
 
-        // Title
-        if (!$this->getTitle()) {
-            $this->title(lang('streams:lookup.name'));
-        } else {
-            $this->title($this->getTitle());
-        }
-
         // Clone
         $ui = $this;
 
