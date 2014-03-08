@@ -234,11 +234,6 @@ class Lookup extends FieldTypeAbstract
             'titleColumn' => $stream->title_column,
         );
 
-        // Title
-        if ($title = $this->getParameter('title')) {
-            $attributes['title'] = $title;
-        }
-
         // Template
         if ($template = $this->getParameter('template')) {
             $attributes['template'] = $template;
